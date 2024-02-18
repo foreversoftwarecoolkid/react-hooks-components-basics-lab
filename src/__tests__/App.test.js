@@ -1,22 +1,27 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+// src/__tests__/App.test.js
+import '@testing-library/jest-dom'; // Import the testing-library/jest-dom library
+import React from 'react';
+import { render } from '@testing-library/react';
+import App from '../components/App';
 
-import App from "../components/App";
-
-test("renders without errors", () => {
-  expect(() => render(<App />)).not.toThrow();
+test('renders without errors', () => {
+  const { container } = render(<App />);
+  // No errors if it renders without crashing
+  expect(container).toBeInTheDocument();
 });
 
-test("renders the correct child components", () => {
+test('renders the correct child components', () => {
   const { container } = render(<App />);
+  
+  // Check if the Navbar component is rendered
+  const navbarElement = container.querySelector("[data-testid='navbar']"); // Assuming Navbar component has data-testid attribute
+  expect(navbarElement).toBeInTheDocument();
 
-  /*
-    Uncomment the line below to see the DOM elements being returned
-    by the App component in your terminal when you run the tests
-  */
-  // screen.debug();
+  // Check if the Home component is rendered
+  const homeElement = container.querySelector("[data-testid='home']");
+  expect(homeElement).toBeInTheDocument();
 
-  expect(container.querySelector("nav")).toBeInTheDocument();
-  expect(container.querySelector("#home")).toBeInTheDocument();
-  expect(container.querySelector("#about")).toBeInTheDocument();
+  // Check if the About component is rendered
+  const aboutElement = container.querySelector("#about");
+  expect(aboutElement).toBeInTheDocument();
 });
